@@ -10,6 +10,10 @@ execute:
   warning: false
 ---
 
+# Github Screenshots
+
+![Screenshot1](images/screenshot1.png) ![Screenshot2](images/Screenshot2.png) ![Screenshot3](images/screenshot3.png)
+
 ## Section 1: Importing Data and Initial Exploration
 
 ```{r}
@@ -73,6 +77,7 @@ if(st_crs(wc_eez) == st_crs(bathymetry) &
   warning("WOAHHHH There! The CRSs do not match!")
 }
 ```
+
 One thing to note is that zone 5, the northern most zone, has been included, but we will want to remove it since it includes geographic areas outside of the United States.
 
 ## Section 2: Process Data
@@ -277,7 +282,8 @@ return(map)
 }
 ```
 
-Now that we have the function developed, we can apply the parameters found within the SeaLifeBase website for Blue Mussels. This will provide a map detailing the quantity of suitable area per exclusion zone. 
+Now that we have the function developed, we can apply the parameters found within the SeaLifeBase website for Blue Mussels. This will provide a map detailing the quantity of suitable area per exclusion zone.
+
 ```{r}
 species_suitibility_function(min_temp = 4.5,
                              max_temp = 16,
@@ -288,6 +294,6 @@ species_suitibility_function(min_temp = 4.5,
 
 ## Section 3 Written Reflection
 
-This analysis provided a better understanding of the areas along the west coast of the United States that may have the best opportunities for aquaculture practices for two of the most common species that can be harvested along much of the seaboard. Besides the two species, Oysters and Blue Mussels, which we looked at, this same function can be utilized for other species. Now, as long as we can provide the parameters for depth and temperature, this function can be utilized for any number of aquaculture practices. 
+This analysis provided a better understanding of the areas along the west coast of the United States that may have the best opportunities for aquaculture practices for two of the most common species that can be harvested along much of the seaboard. Besides the two species, Oysters and Blue Mussels, which we looked at, this same function can be utilized for other species. Now, as long as we can provide the parameters for depth and temperature, this function can be utilized for any number of aquaculture practices.
 
-I did find it somewhat interesting how little area there was that was habitable, but I quickly realized much of that had to do with the depth at sea. I wonder if there would be a way to create floating lines or cages which could be a way to grow mussels or oysters ins shallower waters abover open ocean. 
+I did find it somewhat interesting how little area there was that was habitable, but I quickly realized much of that had to do with the depth at sea. I wonder if there would be a way to create floating lines or cages which could be a way to grow mussels or oysters ins shallower waters abover open ocean.

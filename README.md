@@ -15,7 +15,7 @@ This repository and it's contents are to serve as a way to analyze Economic Excl
 ```
 ├── .Rhistory
 ├── .gitignore
-├───   data
+├───   data/
 │   ├── average_annual_sst_2008.tif
 │   ├── average_annual_sst_2009.tif
 │   ├── average_annual_sst_2010.tif
@@ -25,6 +25,10 @@ This repository and it's contents are to serve as a way to analyze Economic Excl
 │   ├── wc_regions_clean.shp
 ├── EDS223-hw4.Rproj
 ├── Aquaculture and Species Suitability.qmd
+├── Images/
+│   ├── screenshot1.png
+│   ├── screenshot2.png
+│   ├── screenshot3.png
 ├── README.md
 ```
 
