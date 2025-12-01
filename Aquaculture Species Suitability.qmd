@@ -23,6 +23,7 @@ execute:
 #| warning: false
 library(terra) # raster handling
 library(tidyverse)
+library(kableExtra)
 library(here)
 library(raster)
 library(tmap) # map making
@@ -170,7 +171,6 @@ We have successfully found the areas which meet both the depth and temperature p
 #| warning: false
 # vectorize the wc_eez dataframe for cropping and mapping
 wc_eez_vectorized <- vect(wc_eez)
-plot(wc_eez_vectorized)
 ```
 
 ```{r}
@@ -194,23 +194,32 @@ suitibility_area_eez <- zonal(oysters_eez_area,
                               oysters_eez_raster,
                               fun = "sum",
                               na.rm = TRUE)
-# join the suitable areas data w/ the original wc_eez object, and filter out zone 5 since much of the area is outside of the US
+# join the suitable areas data w/ the original wc_eez object, and filter out zone 5 since much of the area is outside of the US and re-name lyr1 column.
 
 oyster_eez_zones <- wc_eez %>%
   filter(rgn_id != 5) %>%
-  left_join(suitibility_area_eez, by = "rgn_id")
+  left_join(suitibility_area_eez, by = "rgn_id") %>%
+  rename(suitable_area_km2 = lyr1)
+
+# create a kable table
+oyster_eez_zones_table <- oyster_eez_zones %>%
+  kable() %>%
+  kable_classic()
+
+oyster_eez_zones_table
 
 # create final oyster map
 
 tm_shape(oyster_eez_zones) +
   tm_polygons(
-    fill = "lyr1",
+    fill = "suitable_area_km2",
     fill.scale = tm_scale(
       values = c("yellow3","green4","navyblue","skyblue")),
     fill.legend = tm_legend(title = "EEZ Zones")
   ) +
   tm_scalebar(position = c("left", "bottom")) +
   tm_compass(position = c("right", "top")) +
+  tm_basemap("OpenStreetMap") +
   tm_title("Oyster Aquaculture Areas in Economic Exclusion Zones")
  
 ```
@@ -262,17 +271,24 @@ suitability_area_df <- zonal(suitable_area,
 
 wc_eez_zones <- wc_eez %>%
   filter(rgn_id != 5) %>%
-  left_join(suitability_area_df, by = "rgn_id") 
+  left_join(suitability_area_df, by = "rgn_id") %>%
+  rename(suitable_area_km2 = lyr1)
+
+# create a kable table
+wc_eez_zones_table <- wc_eez %>%
+  kable() %>%
+  kable_classic()
 
 # Final Map
 map <- tm_shape(wc_eez_zones) +
   tm_polygons(
-    fill = "lyr1",
+    fill = "suitable_area_km2",
     fill.scale = tm_scale(
-      values = c("yellow3","green4","navyblue","skyblue")),
+      values = c("#F0FFFF","#89CFF0","#0000FF","navyblue")),
     fill.legend = tm_legend(title = "Suitable Area for Aquaculture (km2)")
   ) +
   tm_scalebar(position = c("left", "bottom")) +
+  tm_basemap("OpenStreetMap") +
   tm_compass(position = c("right", "top")) +
   tm_title(paste(species_name, "Aquaculture Areas in Economic Exclusion Zones"))
 
